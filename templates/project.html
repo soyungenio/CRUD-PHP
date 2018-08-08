@@ -1,0 +1,300 @@
+ <div class="row ">
+        <div class="col-lg-2">
+          <h3>Project List</h3>   
+        </div>
+        <div class="col-lg-8 mt-12" >
+        
+        
+                            <div class="input-group col-md-12">
+                                <input type="text" id="search_input" value="" ng-model="search_input" class="form-control" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button ng-click="std_ctrl.search_data(search_input)" class="button button-green" type="button">
+                                        <span class=" glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                    
+       </div>
+          <div class="col-lg-2 ">
+              <button type="button" class="button button-purple mt-12 pull-right" data-toggle="modal" data-target="#create_Project_info_modal"> Create Project</button> 
+      
+          </div>
+    </div>
+
+
+
+<p class="{{std_ctrl.Project_list}}">{{std_ctrl.msg}}</p>
+<table class="table">
+            <thead>
+                <tr>
+             
+                    <th>id</th>
+                    <th>Имя</th>
+                    <th>Описание</th>
+                    <th>Цена</th>
+                    <th>Площадь</th>
+                    <th>Материал</th>
+                    <th>Пристрой</th>
+                    <th>Размер</th>
+                    <th>Этажность</th>
+                    <th>Мансарда</th>
+                    <th class="text-right">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+          
+                <tr ng-repeat="Projects in std_ctrl.Project_list">
+                   
+                    <td>{{Projects.id}}</td>
+                    <td>{{Projects.name}}</td>
+                    <td>{{Projects.description}}</td>
+                    <td>{{Projects.price}}</td>
+                    <td>{{Projects.area}}</td>
+                    <td>{{Projects.material}}</td>
+                    <td>{{Projects.outbuilding}}</td>
+                    <td>{{Projects.size}}</td>
+                    <td>{{Projects.floor}}</td>
+                    <td>{{Projects.mansarda}}</td>
+                 
+                <td class="text-right">
+                    <button  type="button" data-toggle="modal" data-target="#edit_Project_info_modal"  class="button button-blue" ng-click="std_ctrl.edit_Project_info(Projects.id)">Edit</button> 
+                    <button type="button"  data-toggle="modal"  class="button button-red" ng-click="std_ctrl.delete_Project_info(Projects.id)">Delete</button> 
+                </td>
+                    
+                    
+                    
+                </tr>
+                
+                
+                
+
+           </tbody>
+        </table>
+    
+
+<div class="pull-right">
+
+    <pagination 
+      ng-model="currentPage"
+      total-items="total_row"
+      max-size="maxSize"  
+      boundary-links="true">
+    </pagination>
+</div>
+
+   <div class="modal fade" id="create_Project_info_modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Project Info</h4>
+        </div>
+        <div class="modal-body">
+           <form method="post"  id="create_Project_info_frm" ng-submit="std_ctrl.addProject(Project)" >
+            <div class="form-group">
+                <label >Имя:</label>
+                <input type="text" name="name" class="form-control" ng-model="std_ctrl.Project.name" required maxlength="50">
+            </div>
+            <div class="form-group">
+                <label >Описание:</label>
+                <input type="text" name="description" class="form-control" ng-model="std_ctrl.Project.description">
+            </div>
+            <div class="form-group">
+                <label >Цена:</label>
+                <input type="text" name="price" ng-model="std_ctrl.Project.price" class="form-control"  maxlength="50">
+            </div>
+            <div class="form-group">
+                <label >Площадь:</label>
+                <input type="text" name="area" ng-model="std_ctrl.Project.area" class="form-control"  maxlength="50">
+            </div>
+            <div class="form-group">
+                <label >Материал:</label>
+                <select class="form-control" name="material" ng-model="std_ctrl.Project.material" >
+                    <option>По желанию</option>
+                    <option>Комбинированные</option>
+                    <option>Из Бруса</option>
+                    <option>Из бревна</option>
+                    <option>Из Sip-панелей</option>
+                </select>
+            </div> 
+            <div class="form-group">
+                <label >Пристрой:</label>
+                <select class="form-control" name="outbuilding" ng-model="std_ctrl.Project.outbuilding" >
+                    <option value="">Любой</option>
+                    <option>С гаражом</option>
+                    <option>С баней</option>
+                    <option>С террасой</option>
+                    <option>С верандой</option>
+                    <option>С эркером</option>
+            </select>
+            </div> 
+            <div class="form-group">
+                <label >Размер:</label>
+                <select class="form-control" name="size" ng-model="std_ctrl.Project.size" >
+                    <option value="">Любой</option>
+                    <option>6 на 6</option>
+                    <option>6 на 7</option>
+                    <option>6 на 9</option>
+                    <option>7 на 7</option>
+                    <option>9 на 9</option>
+                    <option>10 на 10</option>
+                    <option>11 на 11</option>
+                    <option>12 на 12</option>
+                    <option>Другие</option>
+                </select>
+            </div> 
+            <div class="form-group">
+                <label >Этажность:</label>
+                <select class="form-control" name="floor" ng-model="std_ctrl.Project.floor" >
+                    <option value="">Любой</option>
+                    <option>Одноэтажные</option>
+                    <option>Двухэтажные</option>
+                    <option>Трехэтажные</option>
+                    <option>С цокольным этажом</option>
+                </select>
+            </div> 
+            <div class="form-group">
+                <label >Мансарда:</label>
+                <select class="form-control" name="floor" ng-model="std_ctrl.Project.mansarda" >
+                    <option>Есть</option>
+                    <option>Нет</option>
+                </select>
+            </div> 
+            <div class="form-group" data-ng-repeat="field in imageData.co track by $index" >
+                <input type="file" id="{{$index+1}}" class="form-control input-lg" accept="image/*" onchange="angular.element(this).scope().uploadedFile(this)" >
+                <input type="text" name="area" ng-model="imageData.descrip[$index+1]" class="form-control"  maxlength="50">
+                <select class="form-control" name="floor" ng-model="imageData.type[$index+1]" >
+                    <option>slider</option>
+                    <option>plan</option>
+                    <option>preview</option>
+                </select>
+            </div>
+            <input type="button" class="btn btn-info" ng-click="addNewChoice()" value="Add image">
+            <div class="form-group mb-50">
+                <input type="submit" class="button button-green  pull-right"  value="Submit"/>
+            </div>
+        </form>       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+
+
+  <div class="modal fade" id="edit_Project_info_modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Project Info || {{std_ctrl.Project_info.name}} </h4>
+        </div>
+        <div class="modal-body" >
+            <form method="post"  id="edit_Project_info_frm" name="edit_Project_info_frm" ng-submit="std_ctrl.updateProject()">
+                <input name="id" ng-model="std_ctrl.Project_info.id" type="hidden" />
+                <div class="form-group">
+                    <label >Имя:</label>
+                    <input type="text" name="name" class="form-control" ng-model="std_ctrl.Project_info.name" required maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label >Описание:</label>
+                    <input type="text" name="description" class="form-control" ng-model="std_ctrl.Project_info.description">
+                </div>
+                <div class="form-group">
+                    <label >Цена:</label>
+                    <input type="text" name="price" ng-model="std_ctrl.Project_info.price" class="form-control"  maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label >Площадь:</label>
+                    <input type="text" name="area" ng-model="std_ctrl.Project_info.area" class="form-control"  maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label >Материал:</label>
+                    <select class="form-control" name="material" ng-model="std_ctrl.Project_info.material" >
+                        <option value="">Любой</option>
+                        <option>По желанию</option>
+                        <option>Комбинированные</option>
+                        <option>Из Бруса</option>
+                        <option>Из бревна</option>
+                        <option>Из Sip-панелей</option>
+                    </select>
+                </div> 
+                <div class="form-group">
+                    <label >Пристрой:</label>
+                    <select class="form-control" name="outbuilding" ng-model="std_ctrl.Project_info.outbuilding" >
+						<option value="">Любой</option>
+						<option>С гаражом</option>
+						<option>С баней</option>
+                        <option>С террасой</option>
+                        <option>С верандой</option>
+                        <option>С эркером</option>
+                    </select>
+                </div> 
+                <div class="form-group">
+                    <label >Размер:</label>
+                    <select class="form-control" name="size" ng-model="std_ctrl.Project_info.size" >
+						<option value="">Любой</option>
+						<option>6 на 6</option>
+						<option>6 на 7</option>
+                        <option>6 на 9</option>
+                        <option>7 на 7</option>
+                        <option>9 на 9</option>
+						<option>10 на 10</option>
+						<option>11 на 11</option>
+						<option>12 на 12</option>
+						<option>Другие</option>                    </select>
+                </div> 
+                <div class="form-group">
+                    <label >Этажность:</label>
+                    <select class="form-control" name="floor" ng-model="std_ctrl.Project_info.floor" >
+                        <option>Одноэтажные</option>
+                        <option>Двухэтажные</option>
+                        <option>Трехэтажные</option>
+                        <option>С цокольным этажом</option>
+                    </select>
+                </div> 
+                <div class="form-group">
+                    <label >Мансарда:</label>
+                    <select class="form-control" name="floor" ng-model="std_ctrl.Project_info.mansarda" >
+                        <option>Есть</option>
+                        <option>Нет</option>
+                    </select>
+                </div> 
+                <div class="form-group" data-ng-repeat="field in std_ctrl.Image_info track by $index" >
+                    <input type="text" ng-model="field.img" class="form-control input-lg" readonly>
+                    <input type="text" ng-model="field.descrip" class="form-control"  maxlength="50" readonly>
+                    <input class="form-control" ng-model="field.type" readonly>
+                    <input type="button" class="btn btn-info" ng-click="deleteImg($index, field.id, field.img)" value="X">
+                </div>
+                <div class="form-group" data-ng-repeat="field in imageData.co track by $index" >
+                    <input type="file" id="{{$index+1}}" class="form-control input-lg" accept="image/*" onchange="angular.element(this).scope().uploadedFile(this)" >
+                    <input type="text" name="area" ng-model="imageData.descrip[$index+1]" class="form-control"  maxlength="50">
+                    <select class="form-control" name="floor" ng-model="imageData.type[$index+1]" >
+                        <option>slider</option>
+                        <option>plan</option>
+                        <option>preview</option>
+                    </select>
+                </div>
+                <input type="button" class="btn btn-info" ng-click="addNewChoice()" value="Add image">
+                <div class="form-group mb-50">
+                    <input type="submit"  class="button button-green  pull-right"  value="Update"/>
+                </div>
+            </form> 
+    
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+
